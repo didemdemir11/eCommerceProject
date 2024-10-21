@@ -1,6 +1,6 @@
 import React from "react";
 
-const ShopPages = () => {
+const ShopPage = () => {
   return (
     <div>
       <h1>Shop Page</h1>
@@ -9,4 +9,4 @@ const ShopPages = () => {
   );
 };
 
-export default ShopPages;
+export default ShopPage;
