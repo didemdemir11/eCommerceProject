@@ -1,13 +1,18 @@
 import React from "react";
-import Header from "../components/layout/Header";
+import CategorySection from "../components/HomePage/CategorySection";
+import BestsellerSection from "../components/HomePage/BestSellerSection";
+import CarouselSlider from "../components/HomePage/CarouselSlider";
+import NewsContainer from "../components/HomePage/NewsContainer";
+import BlogSection from "../components/HomePage/BlogSection";
 
 const HomePage = () => {
   return (
     <div>
-      <Header />
-      <h1 className="text-2xl font-bold">Welcome to Didi Store!</h1>
-      <p>Discover amazing products at great prices.</p>
-      {/* Add more content like featured products, banners, etc. */}
+      <CarouselSlider />
+      <CategorySection />
+      <BestsellerSection />
+      <NewsContainer />
+      <BlogSection />
     </div>
   );
 };
