@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { Button } from "@/components/ui/button";
+import { Carousel } from "../ui/carousel";
+
 const Header = () => {
   return (
     <header className="flex justify-between items-center p-4 bg-white shadow">
