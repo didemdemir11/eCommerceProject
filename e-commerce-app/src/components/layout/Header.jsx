@@ -103,7 +103,7 @@ const Header = () => {
 
       {/* Mobile Nav Menu */}
       <nav className="mt-4 md:hidden">
-        <ul className="flex flex-col space-y-2">
+        <ul className="flex flex-col space-y-2 text-center">
           <li>
             <Link to="/">Home</Link>
           </li>
