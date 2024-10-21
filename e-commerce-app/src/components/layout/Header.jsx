@@ -88,6 +88,7 @@ const Header = () => {
         <div className="hidden md:flex space-x-4 text-[#23A6F0]">
           <button>
             <FontAwesomeIcon icon={faUser} />
+            <span>Login/Register</span>
           </button>
           <button>
             <FontAwesomeIcon icon={faSearch} />
@@ -120,13 +121,13 @@ const Header = () => {
       </nav>
 
       {/* Carousel Section */}
-      <div className="mt-4 w-full">
+      <div className="mt-4 w-full ">
         <Carousel>
           <CarouselContent>
             <CarouselItem>
               <div
-                className="bg-cover bg-center h-64"
-                style={{ backgroundImage: "url(/path/to/your/image.jpg)" }}
+                className="bg-cover bg-center h-64 md:h-[400px] lg:h-[500px] xl:h-[600px] h-full w-full min-h-[300px]"
+                style={{ backgroundImage: `url("/images/header-image.jpg")` }}
               >
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-center">
                   <h5 className="text-white text-lg font-bold">SUMMER 2020</h5>
