@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
+import PageContent from "./components/layout/PageContent";
 import HomePage from "./pages/HomePage";
 import ProductsPage from "./pages/ProductsPage";
 import ShopPage from "./pages/ShopPage";
@@ -17,7 +18,7 @@ function App() {
   return (
     <Router>
       <Header />
-      <main>
+      <PageContent>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProductsPage />} />
@@ -27,7 +28,7 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
-      </main>
+      </PageContent>
       <Footer />
     </Router>
   );
