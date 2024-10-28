@@ -2,28 +2,28 @@ import React from "react";
 const categories = [
   {
     id: 1,
-    title: "Men",
+    title: "MEN",
     imageUrl: "images/menCategories.jpg",
     width: "w-full",
     height: "h-[500px]",
   },
   {
     id: 2,
-    title: "Women",
+    title: "WOMEN",
     imageUrl: "images/womenCategories.jpg",
     width: "w-full",
     height: "h-[500px]",
   },
   {
     id: 3,
-    title: "Accessories",
+    title: "ACCESSORIES",
     imageUrl: "images/accessories.jpg",
     width: "w-full",
     height: "h-[242px]",
   },
   {
     id: 4,
-    title: "Kids",
+    title: "KIDS",
     imageUrl: "images/kidsCategories.jpg",
     width: "w-full",
     height: "h-[242px]",
