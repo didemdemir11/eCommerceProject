@@ -8,7 +8,7 @@ const products = [
     oldPrice: "$40.00",
     newPrice: "$30.00",
     imageUrl: "/images/product1.jpg",
-    colors: ["#23A6F0", "#23A6FD", "#E77C40", "#252B42"],
+    colors: ["#23A6F0", "#23856D", "#E77C40", "#252B42"],
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ const products = [
     oldPrice: "$40.00",
     newPrice: "$30.00",
     imageUrl: "/images/product2.jpg",
-    colors: ["#23A6F0", "#23A6FD", "#E77C40", "#252B42"],
+    colors: ["#23A6F0", "#23856D", "#E77C40", "#252B42"],
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const products = [
     oldPrice: "$40.00",
     newPrice: "$30.00",
     imageUrl: "/images/product3.jpg",
-    colors: ["#23A6F0", "#23A6FD", "#E77C40", "#252B42"],
+    colors: ["#23A6F0", "#23856D", "#E77C40", "#252B42"],
   },
   {
     id: 4,
@@ -35,7 +35,7 @@ const products = [
     oldPrice: "$40.00",
     newPrice: "$30.00",
     imageUrl: "/images/product4.jpg",
-    colors: ["#23A6F0", "#23A6FD", "#E77C40", "#252B42"],
+    colors: ["#23A6F0", "#23856D", "#E77C40", "#252B42"],
   },
   {
     id: 5,
@@ -44,7 +44,7 @@ const products = [
     oldPrice: "$40.00",
     newPrice: "$30.00",
     imageUrl: "/images/product5.jpg",
-    colors: ["#23A6F0", "#23A6FD", "#E77C40", "#252B42"],
+    colors: ["#23A6F0", "#23856D", "#E77C40", "#252B42"],
   },
   {
     id: 6,
@@ -53,7 +53,7 @@ const products = [
     oldPrice: "$40.00",
     newPrice: "$30.00",
     imageUrl: "/images/product6.jpg",
-    colors: ["#23A6F0", "#23A6FD", "#E77C40", "#252B42"],
+    colors: ["#23A6F0", "#23856D", "#E77C40", "#252B42"],
   },
   {
     id: 7,
@@ -62,7 +62,7 @@ const products = [
     oldPrice: "$40.00",
     newPrice: "$30.00",
     imageUrl: "/images/product7.jpg",
-    colors: ["#23A6F0", "#23A6FD", "#E77C40", "#252B42"],
+    colors: ["#23A6F0", "#23856D", "#E77C40", "#252B42"],
   },
   {
     id: 8,
