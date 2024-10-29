@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -24,8 +24,20 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu";
 
 const Header = () => {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
   return (
     <>
       <div className="w-full">
@@ -54,6 +66,42 @@ const Header = () => {
           </div>
 
           <div className="md:hidden flex space-x-4">
+            <Link to="/" className="text-lg text-gray-700">
+              Home
+            </Link>
+
+            {/* Shop Menüsü */}
+            <NavigationMenu className="text-lg text-gray-700">
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Shop</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="p-4">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link to="/shop/women">Kadın</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link to="/shop/men">Erkek</Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                  {/* Navigation Menu Indicator */}
+                  <NavigationMenuIndicator className="absolute top-full" />
+                </NavigationMenuItem>
+              </NavigationMenuList>
+              <NavigationMenuViewport />
+            </NavigationMenu>
+
+            <Link to="/about" className="text-lg text-gray-700">
+              About
+            </Link>
+            <Link to="/contact" className="text-lg text-gray-700">
+              Contact
+            </Link>
             <button>
               <FontAwesomeIcon icon={faUser} className="text-gray-600" />
             </button>

@@ -1,11 +1,14 @@
 import React from "react";
+import PageContent from "../../components/layout/PageContent";
 
 const ShopPage = () => {
   return (
-    <div>
-      <h1>Shop Page</h1>
-      {/* Add shop content here */}
-    </div>
+    <PageContent>
+      <div>
+        <h1>Shop Page</h1>
+        {/* Add shop content here */}
+      </div>
+    </PageContent>
   );
 };
 
