@@ -21,6 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import ShopCard from "../../components/ShopPage/ShopCard";
 import CustomPagination from "../../components/Shared/customPagination";
+import LogoSection from "../../components/ShopPage/LogoSection";
 
 const ShopPage = () => {
   return (
@@ -85,9 +86,9 @@ const ShopPage = () => {
           </Button>
         </div>
       </div>
-      <ProductCard></ProductCard>
+      <ProductCard />
       <CustomPagination />
-      <div>Customer logos</div>
+      <LogoSection />
     </PageContent>
   );
 };
