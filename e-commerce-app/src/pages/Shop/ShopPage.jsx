@@ -8,15 +8,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import ProductCard from "../../components/Shared/ProductCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTh, faList } from "@fortawesome/free-solid-svg-icons";
@@ -29,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import ShopCard from "../../components/ShopPage/ShopCard";
+import CustomPagination from "../../components/Shared/customPagination";
 
 const ShopPage = () => {
   return (
@@ -94,22 +86,7 @@ const ShopPage = () => {
         </div>
       </div>
       <ProductCard></ProductCard>
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      <CustomPagination />
       <div>Customer logos</div>
     </PageContent>
   );
