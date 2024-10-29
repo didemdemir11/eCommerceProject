@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import PageContent from "./components/layout/PageContent";
-import HomePage from "./pages/HomePage";
-import ProductsPage from "./pages/ProductsPage";
-import ShopPage from "./pages/ShopPage";
-import SignUpPage from "./pages/SignUpPage";
+import HomePage from "./pages/Home/HomePage";
+import ProductsPage from "./pages/Product/ProductsPage";
+import ShopPage from "./pages//Shop/ShopPage";
+import SignUpPage from "./pages/SignUp/SignUpPage";
 import TeamPage from "./pages/TeamPage";
-import ContactPage from "./pages/ContactPage";
-import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/Contact/ContactPage";
+import AboutPage from "./pages/About/AboutPage";
 import "./App.css";
 
 import { Button } from "@/components/ui/button";
@@ -18,17 +18,16 @@ function App() {
   return (
     <Router>
       <Header />
-      <PageContent>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/shop" element={<ShopPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/team" element={<TeamPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/about" element={<AboutPage />} />
-        </Routes>
-      </PageContent>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/shop" element={<ShopPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/team" element={<TeamPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/about" element={<AboutPage />} />
+      </Routes>
+
       <Footer />
     </Router>
   );

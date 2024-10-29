@@ -4,14 +4,18 @@ import BestsellerSection from "../../components/HomePage/BestSellerSection";
 import NewsContainer from "../../components/HomePage/NewsContainer";
 import BlogSection from "../../components/HomePage/BlogSection";
 import CtaSection from "../../components/HomePage/CtaSection";
+import PageContent from "../../components/layout/PageContent";
 
 const HomePage = () => {
   return (
     <div>
-      <CategorySection />
-      <BestsellerSection />
+      {/* PageContent ile sarılı içerikler */}
+      <PageContent>
+        <CategorySection />
+        <BestsellerSection />
+        <CtaSection />
+      </PageContent>
       <NewsContainer />
-      <CtaSection />
       <BlogSection />
     </div>
   );
