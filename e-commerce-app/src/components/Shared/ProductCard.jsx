@@ -78,12 +78,9 @@ const ProductCard = () => {
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:px-20">
       {products.map((product) => (
-        <div
-          key={product.id}
-          className="bg-white p-4 text-center shadow-md rounded-lg"
-        >
+        <div key={product.id} className="bg-white p-4 text-center ">
           <div
-            className="w-full h-48 bg-cover bg-center mb-4 rounded-t-lg"
+            className="w-full h-48 bg-cover bg-center mb-4 "
             style={{ backgroundImage: `url(${product.imageUrl})` }}
           ></div>
           <h5 className="text-lg font-bold text-[#252B42] mb-2">

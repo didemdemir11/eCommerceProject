@@ -9,7 +9,6 @@ import PageContent from "../../components/layout/PageContent";
 const HomePage = () => {
   return (
     <div>
-      {/* PageContent ile sarılı içerikler */}
       <PageContent>
         <CategorySection />
         <BestsellerSection />
