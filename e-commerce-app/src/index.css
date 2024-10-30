@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+.plyr--video .plyr__control--overlaid {
+  @apply bg-[#23A6F0] text-white rounded-full w-16 h-16 flex items-center justify-center; /* Yuvarlak ve ortalı buton */
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
