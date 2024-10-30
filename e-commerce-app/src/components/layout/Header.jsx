@@ -16,7 +16,6 @@ import {
   faInstagram,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
-
 import {
   Carousel,
   CarouselContent,
@@ -27,12 +26,10 @@ import {
 import {
   NavigationMenu,
   NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 
 const Header = () => {
@@ -40,6 +37,7 @@ const Header = () => {
   const isHomePage = location.pathname === "/";
   const isShopOrProductPage =
     location.pathname === "/shop" || location.pathname === "/product";
+
   return (
     <>
       <div className="w-full">
@@ -63,41 +61,20 @@ const Header = () => {
           </div>
         </div>
 
-        <header className="flex justify-between items-center p-4 bg-white ">
+        <header className="flex justify-between items-center p-4 bg-white">
           {/* Logo */}
-          <div className="text-2xl font-bold text-[#252B42]">Didi</div>
-
           {/* Mobile Menü - HomePage ve Shop/Product Farkları */}
-          <div className="md:hidden flex flex-col items-center space-y-4">
+          <div className="md:hidden flex flex-col w-full space-y-4">
             {/* Üst Bant */}
-            <div className="flex justify-between w-full px-4">
-              {isHomePage ? (
-                <>
-                  <button>
-                    <FontAwesomeIcon icon={faUser} className="text-gray-600" />
-                  </button>
-                  <button>
-                    <FontAwesomeIcon
-                      icon={faSearch}
-                      className="text-gray-600"
-                    />
-                  </button>
-                  <button>
-                    <FontAwesomeIcon
-                      icon={faShoppingCart}
-                      className="text-gray-600"
-                    />
-                  </button>
-                </>
-              ) : (
-                <button>
-                  <FontAwesomeIcon icon={faBars} className="text-gray-600" />
-                </button>
-              )}
+            <div className="flex justify-between items-center w-full px-4">
+              <div className="text-2xl font-bold text-[#252B42]">Didi</div>
+              <button>
+                <FontAwesomeIcon icon={faBars} className="text-gray-600" />
+              </button>
             </div>
 
-            {/* Alt Menü */}
-            <div className="flex flex-col items-center space-y-2">
+            {/* Menü Başlıkları ve İkonlar Alt Kısım */}
+            <div className="flex flex-col items-center space-y-2 mt-4">
               {isHomePage ? (
                 <>
                   <Link to="/" className="text-lg text-gray-700">
@@ -115,7 +92,7 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                  <Link to="/home" className="text-lg text-gray-700">
+                  <Link to="/" className="text-lg text-gray-700">
                     Home
                   </Link>
                   <Link to="/shop" className="text-lg text-gray-700">
@@ -130,14 +107,23 @@ const Header = () => {
                   <Link to="/contact" className="text-lg text-gray-700">
                     Contact
                   </Link>
-                  <div className="flex space-x-4 text-[#23A6F0] mt-2">
+                  <Link to="/pages" className="text-lg text-gray-700">
+                    Pages
+                  </Link>
+                </>
+              )}
+
+              {/* İkonlar Alt Alta (Sadece Shop ve Product Sayfaları için) */}
+              {isShopOrProductPage && (
+                <div className="flex flex-col items-center space-y-2 mt-4 text-[#23A6F0]">
+                  <div className="flex items-center space-x-1">
                     <FontAwesomeIcon icon={faUser} />
                     <span>Login/Register</span>
-                    <FontAwesomeIcon icon={faSearch} />
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                    <FontAwesomeIcon icon={faHeart} />
                   </div>
-                </>
+                  <FontAwesomeIcon icon={faSearch} />
+                  <FontAwesomeIcon icon={faShoppingCart} />
+                  <FontAwesomeIcon icon={faHeart} />
+                </div>
               )}
             </div>
           </div>
