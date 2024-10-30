@@ -130,6 +130,7 @@ const Header = () => {
 
           {/* Desktop Menü ve İkonlar */}
           <div className="hidden md:flex items-center justify-between w-full">
+            <div className="text-2xl font-bold text-[#252B42]">Didi</div>
             <nav className="flex items-center space-x-6">
               <Link to="/" className="text-lg text-gray-700">
                 Home
@@ -137,9 +138,12 @@ const Header = () => {
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="text-lg text-gray-700">
-                      Shop
-                    </NavigationMenuTrigger>
+                    <Link
+                      to="/shop"
+                      className="text-lg text-gray-700 inline-flex "
+                    >
+                      <NavigationMenuTrigger>Shop</NavigationMenuTrigger>
+                    </Link>
                     <NavigationMenuContent>
                       <ul className="p-4">
                         <li>
