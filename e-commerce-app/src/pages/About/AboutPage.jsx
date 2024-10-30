@@ -31,14 +31,14 @@ const AboutPage = () => {
       </div>
 
       {/* Problem Trying Section */}
-      <div className="mt-10 text-center md:text-left md:flex md:items-start md:space-x-6">
+      <div className="mt-10 text-center md:text-left md:flex md:items-start  md:space-x-6">
         <div className="flex-1">
           <p className="text-[#E74040]">Problems trying</p>
-          <h3 className="text-[#252B42] mt-2">
+          <h3 className="text-[#252B42] text-2xl font-bold mt-2">
             Met minim Mollie non desert Alamo est sit cliquey dolor do met sent.
           </h3>
         </div>
-        <p className="text-[#737373] mt-2 md:mt-0 md:flex-1">
+        <p className="text-[#737373] mt-2 md:mt-0 md:flex-1 md:self-center">
           Problems trying to resolve the conflict between the two major realms
           of Classical physics: Newtonian mechanics
         </p>
