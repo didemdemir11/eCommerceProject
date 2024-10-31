@@ -22,6 +22,7 @@ const TeamPage = () => {
       <PageContent>
         {/* Başlık ve Alt Başlık */}
         <div className="text-center my-4">
+          {/* FIXME: H5 gibi alanlar temelden tanımlı olacak. Mümkün olduğunca ek class vermeden h5 yazdığında ilgili styling çıkacak. */}
           <h5 className="text-[#737373] text-sm font-bold">WHAT WE DO</h5>
           <h1 className="text-[#252B42] text-4xl md:text-5xl font-bold mt-2">
             Innovation tailored for you
@@ -103,11 +104,13 @@ const TeamPage = () => {
             Met minim Mollie non desert Alamo est sit cliquey dolor do met sent.
             RELIT official consequent.
           </p>
+          {/* TODO: ileride shadcn'e convert etmelisin. */}
           <button className="mt-6 bg-[#23A6F0] text-white py-2 px-6 rounded">
             Try it free now
           </button>
 
           {/* Sosyal Medya İkonları */}
+          {/* Allah sabır vermişsin font awesome bu kadar yeterli */}
           <div className="flex justify-center space-x-4 mt-6">
             <FontAwesomeIcon icon={faFacebook} color="#23A6F0" />
             <FontAwesomeIcon icon={faInstagram} color="#23A6F0" />
