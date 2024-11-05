@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -31,12 +31,23 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { useSelector } from "react-redux";
+import md5 from "md5";
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isHomePage = location.pathname === "/";
   const isShopOrProductPage =
     location.pathname === "/shop" || location.pathname === "/product";
+
+  const userInfo = useSelector((state) => state.user.userInfo);
+
+  const gravatarUrl = userInfo
+    ? `https://www.gravatar.com/avatar/${md5(
+        userInfo.email.trim().toLowerCase()
+      )}?d=identicon`
+    : null;
 
   return (
     <>
@@ -62,10 +73,7 @@ const Header = () => {
         </div>
 
         <header className="flex justify-between items-center p-4 bg-white">
-          {/* Logo */}
-          {/* Mobile Menü - HomePage ve Shop/Product Farkları */}
           <div className="md:hidden flex flex-col w-full space-y-4">
-            {/* Üst Bant */}
             <div className="flex justify-between items-center w-full px-4">
               <div className="text-2xl font-bold text-[#252B42]">Didi</div>
               <button>
@@ -73,7 +81,6 @@ const Header = () => {
               </button>
             </div>
 
-            {/* Menü Başlıkları ve İkonlar Alt Kısım */}
             <div className="flex flex-col items-center space-y-2 mt-4">
               {isHomePage ? (
                 <>
@@ -113,7 +120,6 @@ const Header = () => {
                 </>
               )}
 
-              {/* İkonlar Alt Alta (Sadece Shop ve Product Sayfaları için) */}
               {isShopOrProductPage && (
                 <div className="flex flex-col items-center space-y-2 mt-4 text-[#23A6F0]">
                   <div className="flex items-center space-x-1">
@@ -176,8 +182,31 @@ const Header = () => {
             </nav>
             <div className="flex space-x-4 text-[#23A6F0]">
               <button>
-                <FontAwesomeIcon icon={faUser} />
-                <span>Login/Register</span>
+                {userInfo ? (
+                  <img
+                    src={gravatarUrl}
+                    alt="User Avatar"
+                    className="w-8 h-8 rounded-full"
+                  />
+                ) : (
+                  <>
+                    <FontAwesomeIcon icon={faUser} />
+                    <>
+                      <Link
+                        to="/login"
+                        className="text-[#23A6F0] hover:underline"
+                      >
+                        Login
+                      </Link>
+                      <Link
+                        to="/signup"
+                        className="text-[#23A6F0] hover:underline"
+                      >
+                        Register
+                      </Link>
+                    </>
+                  </>
+                )}
               </button>
               <button>
                 <FontAwesomeIcon icon={faSearch} />
