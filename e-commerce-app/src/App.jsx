@@ -11,6 +11,7 @@ import ContactPage from "./pages/Contact/ContactPage";
 import AboutPage from "./pages/About/AboutPage";
 import ProductDetailPage from "./pages/Product/ProductDetailPage";
 import "./App.css";
+import LoginForm from "./components/LoginPage/LoginForm";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/team" element={<TeamPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/login" element={<LoginForm />} />
       </Routes>
 
       <Footer />
