@@ -12,11 +12,13 @@ import AboutPage from "./pages/About/AboutPage";
 import ProductDetailPage from "./pages/Product/ProductDetailPage";
 import "./App.css";
 import LoginForm from "./components/LoginPage/LoginForm";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <Router>
       <Header />
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/products/:id" element={<ProductDetailPage />} />

@@ -13,9 +13,13 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
   const onSubmit = (data) => {
-    dispatch(loginUser(data, navigate, location));
+    const previousPage = location.state?.from || "/";
+
+    dispatch(loginUser({ ...data, previousPage }))
+      .unwrap()
+      .then((redirectTo) => navigate(redirectTo))
+      .catch(() => {});
   };
 
   return (
