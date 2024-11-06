@@ -26,3 +26,17 @@ export const fetchProducts = () => (dispatch) => {
       });
     });
 };
+
+export const FETCH_PRODUCT_BY_ID_SUCCESS = "FETCH_PRODUCT_BY_ID_SUCCESS";
+export const FETCH_PRODUCT_BY_ID_FAILURE = "FETCH_PRODUCT_BY_ID_FAILURE";
+export const fetchProductById = (id) => (dispatch) => {
+  api
+    .get(`/products/${id}`)
+    .then((response) => {
+      dispatch({ type: FETCH_PRODUCT_BY_ID_SUCCESS, payload: response.data });
+    })
+    .catch((error) => {
+      console.error("Error fetching product by ID:", error);
+      dispatch({ type: FETCH_PRODUCT_BY_ID_FAILURE, payload: error.message });
+    });
+};
