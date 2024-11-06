@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -35,6 +35,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../store/actions/authActions";
 import md5 from "md5";
+import { fetchCategories } from "../../store/actions/categoryActions";
 
 const Header = () => {
   const location = useLocation();
@@ -45,7 +46,11 @@ const Header = () => {
     location.pathname === "/shop" || location.pathname === "/product";
 
   const userInfo = useSelector((state) => state.user.userInfo);
+  const categories = useSelector((state) => state.categories.categories); // Kategorileri Redux'tan çek
 
+  useEffect(() => {
+    dispatch(fetchCategories()); // Kategorileri API'den çek
+  }, [dispatch]);
   const gravatarUrl = userInfo
     ? `https://www.gravatar.com/avatar/${md5(
         userInfo.email.trim().toLowerCase()
@@ -56,6 +61,16 @@ const Header = () => {
     dispatch(logout()).then(() => {
       navigate("/login");
     });
+  };
+  const womenCategories = categories.filter(
+    (category) => category.gender === "k"
+  );
+  const menCategories = categories.filter(
+    (category) => category.gender === "e"
+  );
+
+  const formatCategoryCode = (code) => {
+    return code.replace("k:", "kadin/").replace("e:", "erkek/");
   };
 
   return (
@@ -180,25 +195,48 @@ const Header = () => {
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <Link
-                      to="/shop"
-                      className="text-lg text-gray-700 inline-flex"
-                    >
-                      <NavigationMenuTrigger>Shop</NavigationMenuTrigger>
-                    </Link>
-                    <NavigationMenuContent>
-                      <ul className="p-4">
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link to="/shop/women">Kadın</Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link to="/shop/men">Erkek</Link>
-                          </NavigationMenuLink>
-                        </li>
-                      </ul>
+                    <NavigationMenuTrigger className="text-lg text-gray-700">
+                      Shop
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent className="grid gap-4 bg-white p-4 rounded shadow-md md:w-[400px] lg:w-[500px] lg:grid-cols-2 ">
+                      <div>
+                        <h5 className="font-bold text-lg">Kadın</h5>
+                        <ul className="space-y-1 mt-2">
+                          {womenCategories.map((category) => (
+                            <li key={category.id}>
+                              <NavigationMenuLink asChild>
+                                <Link
+                                  to={`/shop/${formatCategoryCode(
+                                    category.code
+                                  )}`}
+                                  className="text-gray-700 hover:text-blue-600"
+                                >
+                                  {category.title}
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h5 className="font-bold text-lg">Erkek</h5>
+                        <ul className="space-y-1 mt-2">
+                          {menCategories.map((category) => (
+                            <li key={category.id}>
+                              <NavigationMenuLink asChild>
+                                <Link
+                                  to={`/shop/${formatCategoryCode(
+                                    category.code
+                                  )}`}
+                                  className="text-gray-700 hover:text-blue-600"
+                                >
+                                  {category.title}
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </NavigationMenuContent>
                   </NavigationMenuItem>
                 </NavigationMenuList>
