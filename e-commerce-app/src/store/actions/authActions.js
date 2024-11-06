@@ -34,3 +34,39 @@ export const loginUser = createAsyncThunk(
       });
   }
 );
+
+export const autoLogin = createAsyncThunk(
+  "auth/autoLogin",
+  (_, { dispatch }) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    api.defaults.headers.common["Authorization"] = token;
+    return api
+      .get("/verify")
+      .then((response) => {
+        const userInfo = response.data;
+        dispatch(setUser(userInfo));
+        localStorage.setItem("token", userInfo.token);
+        api.defaults.headers.common["Authorization"] = userInfo.token;
+        if (!localStorage.getItem("isLoggedIn")) {
+          toast.success("Otomatik giriş başarılı!");
+          localStorage.setItem("isLoggedIn", "true"); // İlk girişte flag ekle
+        }
+      })
+      .catch((error) => {
+        localStorage.removeItem("token");
+        delete api.defaults.headers.common["Authorization"];
+        toast.error("Oturum geçersiz. Yeniden giriş yapınız.");
+        console.error("Otomatik giriş hatası:", error);
+      });
+  }
+);
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async (_, { dispatch }) => {
+    localStorage.removeItem("token");
+    delete api.defaults.headers.common["Authorization"];
+    dispatch(setUser(null));
+    toast.success("Başarıyla çıkış yapıldı!");
+  }
+);
