@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PageContent from "../../components/layout/PageContent";
 import {
   Breadcrumb,
@@ -22,8 +23,14 @@ import { Button } from "@/components/ui/button";
 import ShopCard from "../../components/ShopPage/ShopCard";
 import CustomPagination from "../../components/Shared/customPagination";
 import LogoSection from "../../components/ShopPage/LogoSection";
+import { fetchCategories } from "../../store/actions/categoryActions";
 
 const ShopPage = () => {
+  const dispatch = useDispatch();
+  const categories = useSelector((state) => state.categories.categories);
+  useEffect(() => {
+    dispatch(fetchCategories()); // Kategorileri çek
+  }, [dispatch]);
   return (
     <PageContent>
       <div className="mt-12 md:mt-8 flex flex-col md:flex-row items-center md:justify-between px-4 md:px-8">
@@ -47,7 +54,7 @@ const ShopPage = () => {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <ShopCard />
+      <ShopCard categories={categories} />
       <div className="flex flex-col md:flex-row items-center justify-between w-full space-y-4 md:space-y-0 md:space-x-8 mt-4 md:mt-8">
         {/* Showing Results */}
         <h6 className="text-center md:text-left font-bold text-[#737373] text-sm md:text-base">
