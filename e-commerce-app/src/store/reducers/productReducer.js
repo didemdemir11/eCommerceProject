@@ -1,31 +1,32 @@
+import {
+  FETCH_PRODUCTS_SUCCESS,
+  FETCH_PRODUCTS_FAILURE,
+  SET_LOADING,
+} from "../actions/productActions";
+
 const initialState = {
-  categories: [],
-  productList: [],
+  products: [],
   total: 0,
-  limit: 25,
-  offset: 0,
-  filter: "",
-  fetchState: "NOT_FETCHED",
+  isLoading: false,
+  error: null,
 };
 
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_CATEGORIES":
-      return { ...state, categories: action.payload };
-    case "SET_PRODUCT_LIST":
-      return { ...state, productList: action.payload };
-    case "SET_TOTAL":
-      return { ...state, total: action.payload };
-    case "SET_FETCH_STATE":
-      return { ...state, fetchState: action.payload };
-    case "SET_LIMIT":
-      return { ...state, limit: action.payload };
-    case "SET_OFFSET":
-      return { ...state, offset: action.payload };
-    case "SET_FILTER":
-      return { ...state, filter: action.payload };
+    case SET_LOADING:
+      return { ...state, isLoading: true };
+    case FETCH_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        products: action.payload.products,
+        total: action.payload.total,
+        isLoading: false,
+      };
+    case FETCH_PRODUCTS_FAILURE:
+      return { ...state, error: action.payload, isLoading: false };
     default:
       return state;
   }
 };
+
 export default productReducer;

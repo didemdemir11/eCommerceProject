@@ -8,7 +8,7 @@ import categoryReducer from "./reducers/categoryReducer";
 const store = configureStore({
   reducer: {
     user: userReducer,
-    product: productReducer,
+    products: productReducer,
     shoppingCart: shoppingCartReducer,
     categories: categoryReducer,
   },
