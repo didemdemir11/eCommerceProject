@@ -1,7 +1,7 @@
-import axios from "axios";
+import api from "../../services/api";
 
-export const fetchCategories = (credentials) => (dispatch) => {
-  axios
+export const fetchCategories = () => (dispatch) => {
+  api
     .get("/categories")
     .then((response) => {
       dispatch({ type: "SET_CATEGORIES", payload: response.data });
@@ -11,7 +11,7 @@ export const fetchCategories = (credentials) => (dispatch) => {
     });
 };
 export const fetchProducts = () => (dispatch) => {
-  axios
+  api
     .get("/products")
     .then((response) => {
       dispatch({ type: "SET_PRODUCT_LIST", payload: response.data });
