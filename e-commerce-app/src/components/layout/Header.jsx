@@ -9,6 +9,7 @@ import {
   faPhone,
   faEnvelope,
   faHeart,
+  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebook,
@@ -31,12 +32,14 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../store/actions/authActions";
 import md5 from "md5";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const isHomePage = location.pathname === "/";
   const isShopOrProductPage =
     location.pathname === "/shop" || location.pathname === "/product";
@@ -49,10 +52,15 @@ const Header = () => {
       )}?d=identicon`
     : null;
 
+  const handleLogout = () => {
+    dispatch(logout()).then(() => {
+      navigate("/login");
+    });
+  };
+
   return (
     <>
       <div className="w-full">
-        {/* Üst Bant (Sadece Desktop için) */}
         <div className="hidden md:flex justify-between items-center p-2 bg-[#252B42] text-white">
           <div className="flex items-center space-x-4">
             <FontAwesomeIcon icon={faPhone} />
@@ -119,22 +127,50 @@ const Header = () => {
                   </Link>
                 </>
               )}
+            </div>
 
-              {isShopOrProductPage && (
-                <div className="flex flex-col items-center space-y-2 mt-4 text-[#23A6F0]">
+            <div className="flex flex-col items-center space-y-2 mt-4 text-[#23A6F0]">
+              {userInfo ? (
+                <>
+                  <img
+                    src={gravatarUrl}
+                    alt="User Avatar"
+                    className="w-8 h-8 rounded-full"
+                  />
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center space-x-1"
+                  >
+                    <FontAwesomeIcon icon={faSignOutAlt} />
+                    <span>Logout</span>
+                  </button>
+                </>
+              ) : (
+                <>
                   <div className="flex items-center space-x-1">
                     <FontAwesomeIcon icon={faUser} />
-                    <span>Login/Register</span>
+                    <Link
+                      to="/login"
+                      className="text-[#23A6F0] hover:underline"
+                    >
+                      Login
+                    </Link>{" "}
+                    /
+                    <Link
+                      to="/signup"
+                      className="text-[#23A6F0] hover:underline"
+                    >
+                      Register
+                    </Link>
                   </div>
-                  <FontAwesomeIcon icon={faSearch} />
-                  <FontAwesomeIcon icon={faShoppingCart} />
-                  <FontAwesomeIcon icon={faHeart} />
-                </div>
+                </>
               )}
+              <FontAwesomeIcon icon={faSearch} />
+              <FontAwesomeIcon icon={faShoppingCart} />
+              <FontAwesomeIcon icon={faHeart} />
             </div>
           </div>
 
-          {/* Desktop Menü ve İkonlar */}
           <div className="hidden md:flex items-center justify-between w-full">
             <div className="text-2xl font-bold text-[#252B42]">Didi</div>
             <nav className="flex items-center space-x-6">
@@ -146,7 +182,7 @@ const Header = () => {
                   <NavigationMenuItem>
                     <Link
                       to="/shop"
-                      className="text-lg text-gray-700 inline-flex "
+                      className="text-lg text-gray-700 inline-flex"
                     >
                       <NavigationMenuTrigger>Shop</NavigationMenuTrigger>
                     </Link>
@@ -181,33 +217,31 @@ const Header = () => {
               </Link>
             </nav>
             <div className="flex space-x-4 text-[#23A6F0]">
-              <button>
-                {userInfo ? (
+              {userInfo ? (
+                <>
                   <img
                     src={gravatarUrl}
                     alt="User Avatar"
                     className="w-8 h-8 rounded-full"
                   />
-                ) : (
-                  <>
-                    <FontAwesomeIcon icon={faUser} />
-                    <>
-                      <Link
-                        to="/login"
-                        className="text-[#23A6F0] hover:underline"
-                      >
-                        Login
-                      </Link>
-                      <Link
-                        to="/signup"
-                        className="text-[#23A6F0] hover:underline"
-                      >
-                        Register
-                      </Link>
-                    </>
-                  </>
-                )}
-              </button>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center space-x-1"
+                  >
+                    <FontAwesomeIcon icon={faSignOutAlt} />
+                    <span>Logout</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="text-[#23A6F0] hover:underline">
+                    <FontAwesomeIcon icon={faUser} /> Login
+                  </Link>
+                  <Link to="/signup" className="text-[#23A6F0] hover:underline">
+                    Register
+                  </Link>
+                </>
+              )}
               <button>
                 <FontAwesomeIcon icon={faSearch} />
               </button>
@@ -221,7 +255,6 @@ const Header = () => {
           </div>
         </header>
 
-        {/* Carousel Section (Sadece HomePage için) */}
         {isHomePage && (
           <div className="mt-4 w-full">
             <Carousel>
