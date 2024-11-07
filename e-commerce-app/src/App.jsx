@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
@@ -11,10 +11,17 @@ import ContactPage from "./pages/Contact/ContactPage";
 import AboutPage from "./pages/About/AboutPage";
 import ProductDetailPage from "./pages/Product/ProductDetailPage";
 import "./App.css";
-import LoginForm from "./components/LoginPage/LoginForm";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { autoLogin } from "./store/actions/authActions";
+import LoginPage from "./pages/Login/LoginPage";
+
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(autoLogin());
+  }, [dispatch]);
   return (
     <Router>
       <Header />
@@ -28,7 +35,7 @@ function App() {
         <Route path="/team" element={<TeamPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/login" element={<LoginForm />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
 
       <Footer />

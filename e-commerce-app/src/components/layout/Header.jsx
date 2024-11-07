@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,6 +9,7 @@ import {
   faPhone,
   faEnvelope,
   faHeart,
+  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebook,
@@ -31,28 +32,50 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../store/actions/authActions";
 import md5 from "md5";
+import { fetchCategories } from "../../store/actions/categoryActions";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const isHomePage = location.pathname === "/";
   const isShopOrProductPage =
     location.pathname === "/shop" || location.pathname === "/product";
 
   const userInfo = useSelector((state) => state.user.userInfo);
+  const categories = useSelector((state) => state.categories.categories); // Kategorileri Redux'tan çek
 
+  useEffect(() => {
+    dispatch(fetchCategories()); // Kategorileri API'den çek
+  }, [dispatch]);
   const gravatarUrl = userInfo
     ? `https://www.gravatar.com/avatar/${md5(
         userInfo.email.trim().toLowerCase()
       )}?d=identicon`
     : null;
 
+  const handleLogout = () => {
+    dispatch(logout()).then(() => {
+      navigate("/login");
+    });
+  };
+  const womenCategories = categories.filter(
+    (category) => category.gender === "k"
+  );
+  const menCategories = categories.filter(
+    (category) => category.gender === "e"
+  );
+
+  const formatCategoryCode = (code) => {
+    return code.replace("k:", "kadin/").replace("e:", "erkek/");
+  };
+
   return (
     <>
       <div className="w-full">
-        {/* Üst Bant (Sadece Desktop için) */}
         <div className="hidden md:flex justify-between items-center p-2 bg-[#252B42] text-white">
           <div className="flex items-center space-x-4">
             <FontAwesomeIcon icon={faPhone} />
@@ -119,22 +142,50 @@ const Header = () => {
                   </Link>
                 </>
               )}
+            </div>
 
-              {isShopOrProductPage && (
-                <div className="flex flex-col items-center space-y-2 mt-4 text-[#23A6F0]">
+            <div className="flex flex-col items-center space-y-2 mt-4 text-[#23A6F0]">
+              {userInfo ? (
+                <>
+                  <img
+                    src={gravatarUrl}
+                    alt="User Avatar"
+                    className="w-8 h-8 rounded-full"
+                  />
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center space-x-1"
+                  >
+                    <FontAwesomeIcon icon={faSignOutAlt} />
+                    <span>Logout</span>
+                  </button>
+                </>
+              ) : (
+                <>
                   <div className="flex items-center space-x-1">
                     <FontAwesomeIcon icon={faUser} />
-                    <span>Login/Register</span>
+                    <Link
+                      to="/login"
+                      className="text-[#23A6F0] hover:underline"
+                    >
+                      Login
+                    </Link>{" "}
+                    /
+                    <Link
+                      to="/signup"
+                      className="text-[#23A6F0] hover:underline"
+                    >
+                      Register
+                    </Link>
                   </div>
-                  <FontAwesomeIcon icon={faSearch} />
-                  <FontAwesomeIcon icon={faShoppingCart} />
-                  <FontAwesomeIcon icon={faHeart} />
-                </div>
+                </>
               )}
+              <FontAwesomeIcon icon={faSearch} />
+              <FontAwesomeIcon icon={faShoppingCart} />
+              <FontAwesomeIcon icon={faHeart} />
             </div>
           </div>
 
-          {/* Desktop Menü ve İkonlar */}
           <div className="hidden md:flex items-center justify-between w-full">
             <div className="text-2xl font-bold text-[#252B42]">Didi</div>
             <nav className="flex items-center space-x-6">
@@ -144,25 +195,48 @@ const Header = () => {
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <Link
-                      to="/shop"
-                      className="text-lg text-gray-700 inline-flex "
-                    >
-                      <NavigationMenuTrigger>Shop</NavigationMenuTrigger>
-                    </Link>
-                    <NavigationMenuContent>
-                      <ul className="p-4">
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link to="/shop/women">Kadın</Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link to="/shop/men">Erkek</Link>
-                          </NavigationMenuLink>
-                        </li>
-                      </ul>
+                    <NavigationMenuTrigger className="text-lg text-gray-700">
+                      Shop
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent className="grid gap-4 bg-white p-4 rounded shadow-md md:w-[400px] lg:w-[500px] lg:grid-cols-2 ">
+                      <div>
+                        <h5 className="font-bold text-lg">Kadın</h5>
+                        <ul className="space-y-1 mt-2">
+                          {womenCategories.map((category) => (
+                            <li key={category.id}>
+                              <NavigationMenuLink asChild>
+                                <Link
+                                  to={`/shop/${formatCategoryCode(
+                                    category.code
+                                  )}`}
+                                  className="text-gray-700 hover:text-blue-600"
+                                >
+                                  {category.title}
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h5 className="font-bold text-lg">Erkek</h5>
+                        <ul className="space-y-1 mt-2">
+                          {menCategories.map((category) => (
+                            <li key={category.id}>
+                              <NavigationMenuLink asChild>
+                                <Link
+                                  to={`/shop/${formatCategoryCode(
+                                    category.code
+                                  )}`}
+                                  className="text-gray-700 hover:text-blue-600"
+                                >
+                                  {category.title}
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </NavigationMenuContent>
                   </NavigationMenuItem>
                 </NavigationMenuList>
@@ -181,33 +255,31 @@ const Header = () => {
               </Link>
             </nav>
             <div className="flex space-x-4 text-[#23A6F0]">
-              <button>
-                {userInfo ? (
+              {userInfo ? (
+                <>
                   <img
                     src={gravatarUrl}
                     alt="User Avatar"
                     className="w-8 h-8 rounded-full"
                   />
-                ) : (
-                  <>
-                    <FontAwesomeIcon icon={faUser} />
-                    <>
-                      <Link
-                        to="/login"
-                        className="text-[#23A6F0] hover:underline"
-                      >
-                        Login
-                      </Link>
-                      <Link
-                        to="/signup"
-                        className="text-[#23A6F0] hover:underline"
-                      >
-                        Register
-                      </Link>
-                    </>
-                  </>
-                )}
-              </button>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center space-x-1"
+                  >
+                    <FontAwesomeIcon icon={faSignOutAlt} />
+                    <span>Logout</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="text-[#23A6F0] hover:underline">
+                    <FontAwesomeIcon icon={faUser} /> Login
+                  </Link>
+                  <Link to="/signup" className="text-[#23A6F0] hover:underline">
+                    Register
+                  </Link>
+                </>
+              )}
               <button>
                 <FontAwesomeIcon icon={faSearch} />
               </button>
@@ -221,7 +293,6 @@ const Header = () => {
           </div>
         </header>
 
-        {/* Carousel Section (Sadece HomePage için) */}
         {isHomePage && (
           <div className="mt-4 w-full">
             <Carousel>

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import products from "../../data/products";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -21,16 +21,26 @@ import {
   faShoppingCart,
   faHeart,
   faSyncAlt,
-  faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import PageContent from "../../components/layout/PageContent";
 import FullWidthSection from "../../components/Shared/FullWidthSection";
 import ProductCard from "../../components/Shared/ProductCard";
 import LogoSection from "../../components/ShopPage/LogoSection";
+import { fetchProductById } from "../../store/actions/productActions"; // Thunk action for fetching specific product
 
 const ProductDetailPage = () => {
   const { id } = useParams();
-  const product = products.find((product) => product.id === parseInt(id));
+  const dispatch = useDispatch();
+  const product = useSelector((state) => state.products.selectedProduct);
+  const loading = useSelector((state) => state.products.loading);
+
+  useEffect(() => {
+    dispatch(fetchProductById(id));
+  }, [dispatch, id]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   if (!product) {
     return <p>Product not found.</p>;
@@ -76,26 +86,29 @@ const ProductDetailPage = () => {
               <div className="w-full md:w-1/2">
                 <Carousel>
                   <CarouselContent>
-                    <CarouselItem>
-                      <img
-                        src={product.imageUrl}
-                        alt={product.name}
-                        className="w-full h-auto rounded"
-                      />
-                    </CarouselItem>
-                    {/* Add more CarouselItem components for additional images if needed */}
+                    {product.images.map((image, index) => (
+                      <CarouselItem key={index}>
+                        <img
+                          src={image.url}
+                          alt={product.name}
+                          className="w-full h-auto rounded"
+                        />
+                      </CarouselItem>
+                    ))}
                   </CarouselContent>
                   <CarouselPrevious />
                   <CarouselNext />
                 </Carousel>
                 <div className="flex space-x-2 mt-4">
                   {/* Thumbnail previews */}
-                  <img
-                    src={product.imageUrl}
-                    alt="Thumbnail"
-                    className="w-16 h-16 object-cover rounded"
-                  />
-                  {/* Add more thumbnails as necessary */}
+                  {product.images.map((image, index) => (
+                    <img
+                      key={index}
+                      src={image.url}
+                      alt="Thumbnail"
+                      className="w-16 h-16 object-cover rounded"
+                    />
+                  ))}
                 </div>
               </div>
 
@@ -122,11 +135,11 @@ const ProductDetailPage = () => {
                 {/* Price */}
                 <div className="flex items-center mt-4 space-x-2">
                   <span className="text-[#252B42] font-bold text-xl">
-                    {product.newPrice}
+                    {product.price}₺
                   </span>
                   {product.oldPrice && (
                     <span className="text-gray-500 line-through">
-                      {product.oldPrice}
+                      {product.oldPrice}₺
                     </span>
                   )}
                 </div>
@@ -136,26 +149,17 @@ const ProductDetailPage = () => {
                   <h6 className="text-[#737373] font-bold text-sm">
                     Availability:
                   </h6>
-                  <span className="text-[#23A6F0] font-semibold">In Stock</span>
+                  <span className="text-[#23A6F0] font-semibold">
+                    {product.stock > 0 ? "In Stock" : "Out of Stock"}
+                  </span>
                 </div>
 
                 {/* Product Description */}
                 <p className="text-[#858585] font-normal text-sm mt-4">
-                  Description of the product can go here.
+                  {product.description}
                 </p>
 
                 <hr className="border border-[#BDBDBD] my-4" />
-
-                {/* Color Palette */}
-                <div className="flex items-center mt-2 space-x-2">
-                  {product.colors.map((color, index) => (
-                    <span
-                      key={index}
-                      className="w-5 h-5 rounded-full border"
-                      style={{ backgroundColor: color }}
-                    ></span>
-                  ))}
-                </div>
 
                 {/* Action Buttons */}
                 <div className="flex items-center mt-6 space-x-4">
@@ -188,129 +192,13 @@ const ProductDetailPage = () => {
           </div>
         </PageContent>
       </FullWidthSection>
+
+      {/* Additional Sections */}
       <FullWidthSection bgColor="bg-white">
-        <PageContent>
-          <div className="mt-8">
-            {/* Başlık Linkleri */}
-            <div className="flex justify-center space-x-4 mb-4">
-              <a
-                href="#description"
-                className="text-lg font-semibold text-[#252B42]"
-              >
-                Description
-              </a>
-              <a
-                href="#additional-information"
-                className="text-lg font-semibold text-[#252B42]"
-              >
-                Additional Information
-              </a>
-              <a
-                href="#reviews"
-                className="text-lg font-semibold text-[#252B42]"
-              >
-                Reviews (0)
-              </a>
-            </div>
-
-            {/* Ayırıcı Çizgi */}
-            <hr className="border border-[#ECECEC] mb-8 max-w-screen-lg mx-auto" />
-
-            {/* Ürün Detayları */}
-            <div className="flex flex-col lg:flex-row items-start gap-8">
-              {/* Görsel */}
-              <div
-                className="w-[325px] h-[282px] bg-[#C4C4C433] rounded-tl-md overflow-hidden"
-                style={{
-                  borderRadius: "5.62px 0 0 0",
-                }}
-              >
-                <img
-                  src="/path/to/your/product-image.jpg" // Görselinize göre yol düzenleyin
-                  alt="Product"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              {/* Açıklama ve İçerik */}
-              <div className="max-w-lg">
-                {/* Başlık */}
-                <h3 className="text-[#252B42] font-bold text-2xl mb-4">
-                  the quick fox jumps over
-                </h3>
-
-                {/* Paragraflar */}
-                <p className="text-[#737373] text-sm mb-4">
-                  Met minim Mollie non desert Alamo est sit cliquey dolor do met
-                  sent. RELIT official consequent door ENIM RELIT Mollie.
-                  Excitation venial consequent sent nostrum met.
-                </p>
-                <p className="text-[#737373] text-sm mb-4">
-                  Met minim Mollie non desert Alamo est sit cliquey dolor do met
-                  sent. RELIT official consequent door ENIM RELIT Mollie.
-                  Excitation venial consequent sent nostrum met.
-                </p>
-                <p className="text-[#737373] text-sm mb-8">
-                  Met minim Mollie non desert Alamo est sit cliquey dolor do met
-                  sent. RELIT official consequent door ENIM RELIT Mollie.
-                  Excitation venial consequent sent nostrum met.
-                </p>
-
-                {/* Başlık ve Liste */}
-                <h3 className="text-[#252B42] font-bold text-2xl mb-4">
-                  the quick fox jumps over
-                </h3>
-
-                {/* Liste Elemanları */}
-                <ul className="space-y-2 mb-8">
-                  {Array(4)
-                    .fill("the quick fox jumps over the lazy dog")
-                    .map((text, index) => (
-                      <li key={index} className="flex items-center">
-                        <FontAwesomeIcon
-                          icon={faArrowRight}
-                          className="text-[#737373] mr-2"
-                          size="xs"
-                        />
-                        <h6 className="text-[#737373] font-bold text-sm">
-                          {text}
-                        </h6>
-                      </li>
-                    ))}
-                </ul>
-
-                {/* Aynı Bölümün Tekrarı */}
-                <h3 className="text-[#252B42] font-bold text-2xl mb-4">
-                  the quick fox jumps over
-                </h3>
-
-                <ul className="space-y-2">
-                  {Array(4)
-                    .fill("the quick fox jumps over the lazy dog")
-                    .map((text, index) => (
-                      <li key={index} className="flex items-center">
-                        <FontAwesomeIcon
-                          icon={faArrowRight}
-                          className="text-[#737373] mr-2"
-                          size="xs"
-                        />
-                        <h6 className="text-[#737373] font-bold text-sm">
-                          {text}
-                        </h6>
-                      </li>
-                    ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </PageContent>
-      </FullWidthSection>
-      <FullWidthSection bgColor="bg-[#FAFAFA] ">
         <PageContent>
           <h3 className="text-[#252B42] font-bold text-2xl flex space-x-4 mb-6">
             BESTSELLER PRODUCTS
           </h3>
-          <hr className="border border-[#ECECEC] mb-8 max-w-screen-lg mx-auto" />
           <ProductCard />
           <LogoSection />
         </PageContent>
