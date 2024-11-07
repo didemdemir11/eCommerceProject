@@ -6,12 +6,16 @@ import { fetchProducts } from "../../store/actions/productActions";
 const ProductCard = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
-  const loading = useSelector((state) => state.products.loading);
+  const isLoading = useSelector((state) => state.products.isLoading);
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
-  if (loading) {
-    return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-48">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+      </div>
+    );
   }
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:px-20">

@@ -21,7 +21,6 @@ import {
   faShoppingCart,
   faHeart,
   faSyncAlt,
-  faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import PageContent from "../../components/layout/PageContent";
 import FullWidthSection from "../../components/Shared/FullWidthSection";
