@@ -3,13 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchProducts } from "../../store/actions/productActions";
 
-const ProductCard = () => {
+const ProductCard = ({ category, filter, sort }) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const isLoading = useSelector((state) => state.products.isLoading);
+
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    dispatch(fetchProducts({ category, filter, sort }));
+  }, [dispatch, category, filter, sort]);
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-48">
