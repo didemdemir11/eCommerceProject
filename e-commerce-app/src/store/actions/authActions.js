@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../services/api";
-import { setUser } from "../reducers/userReducer";
+import { setRoles, setUser } from "../reducers/userReducer";
 import { toast } from "react-toastify";
 
 export const loginUser = createAsyncThunk(
@@ -19,7 +19,9 @@ export const loginUser = createAsyncThunk(
         }
 
         dispatch(setUser(userInfo));
-
+        if (userInfo.roles) {
+          dispatch(setRoles(userInfo.roles));
+        }
         toast.success("Giriş başarılı!");
         return previousPage;
       })
