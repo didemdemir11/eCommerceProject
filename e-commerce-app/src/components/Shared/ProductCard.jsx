@@ -21,7 +21,7 @@ const ProductCard = ({ category, filter, sort }) => {
   }
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:px-20">
-      {products.slice(0, 8).map((product) => (
+      {products.map((product) => (
         <Link to={`/products/${product.id}`} key={product.id}>
           <div className="bg-white p-4 text-center ">
             <div

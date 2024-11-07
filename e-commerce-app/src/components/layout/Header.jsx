@@ -51,6 +51,7 @@ const Header = () => {
   useEffect(() => {
     dispatch(fetchCategories()); // Kategorileri API'den çek
   }, [dispatch]);
+
   const gravatarUrl = userInfo
     ? `https://www.gravatar.com/avatar/${md5(
         userInfo.email.trim().toLowerCase()

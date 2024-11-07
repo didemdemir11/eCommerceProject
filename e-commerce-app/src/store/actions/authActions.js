@@ -50,7 +50,7 @@ export const autoLogin = createAsyncThunk(
         api.defaults.headers.common["Authorization"] = userInfo.token;
         if (!localStorage.getItem("isLoggedIn")) {
           toast.success("Otomatik giriş başarılı!");
-          localStorage.setItem("isLoggedIn", "true"); // İlk girişte flag ekle
+          localStorage.setItem("isLoggedIn", "true");
         }
       })
       .catch((error) => {

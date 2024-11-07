@@ -29,22 +29,24 @@ import { fetchProducts } from "../../store/actions/productActions";
 
 const ShopPage = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
+  const { gender, categoryName, categoryId } = useParams();
   const navigate = useNavigate();
-
-  const [category, setCategory] = useState(null);
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState("");
+
   const categories = useSelector((state) => state.categories.categories);
   const products = useSelector((state) => state.products.products);
+
   useEffect(() => {
     dispatch(fetchCategories());
-    dispatch(fetchProducts({ category, filter, sort }));
-  }, [dispatch, category, filter, sort]);
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchProducts({ category: categoryId, filter, sort })); // Fetch products using categoryId
+  }, [dispatch, categoryId, filter, sort]); // Fetch products on change
 
   const applyFilters = () => {
     const params = new URLSearchParams();
-    if (category) params.append("category", category);
+
     if (filter) params.append("filter", filter);
     if (sort) params.append("sort", sort);
 
@@ -53,7 +55,9 @@ const ShopPage = () => {
   return (
     <PageContent>
       <div className="mt-12 md:mt-8 flex flex-col md:flex-row items-center md:justify-between px-4 md:px-8">
-        <h3 className="text-2xl font-bold text-[#252B42]">Shop</h3>
+        <h3 className="text-2xl font-bold text-[#252B42]">
+          Shop {gender} - {categoryName}
+        </h3>
         <Breadcrumb
           className="mt-2 md:mt-0 md:flex md:items-center "
           separator={<BreadcrumbSeparator />}
@@ -115,7 +119,7 @@ const ShopPage = () => {
           </Button>
         </div>
       </div>
-      <ProductCard category={category} filter={filter} sort={sort} />
+      <ProductCard category={categoryId} filter={filter} sort={sort} />
       <CustomPagination />
       <LogoSection />
     </PageContent>

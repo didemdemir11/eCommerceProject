@@ -9,7 +9,7 @@ const ShopCard = ({ categories }) => {
     <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 p-4">
       {topCategories.map((category) => (
         <a
-          href={`/shop/${category.gender}/${category.code}`} // Link yapısını oluştur
+          href={`/shop/${category.gender}/${category.code}/${category.id}`} // Link yapısını oluştur
           key={category.id}
           className="bg-cover bg-center flex items-center justify-center text-center"
           style={{
