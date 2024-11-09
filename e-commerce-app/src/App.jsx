@@ -28,6 +28,10 @@ function App() {
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route
+          path="shop/:gender/:categoryName/:categoryId"
+          element={<ShopPage />}
+        />
         <Route path="/products/:id" element={<ProductDetailPage />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/shop" element={<ShopPage />} />

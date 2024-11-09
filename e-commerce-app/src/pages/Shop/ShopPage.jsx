@@ -52,6 +52,10 @@ const ShopPage = () => {
 
     navigate({ search: params.toString() });
   };
+
+  useEffect(() => {
+    applyFilters();
+  }, [filter, sort]);
   return (
     <PageContent>
       <div className="mt-12 md:mt-8 flex flex-col md:flex-row items-center md:justify-between px-4 md:px-8">

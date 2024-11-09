@@ -1,5 +1,6 @@
 // src/components/ShopCard.jsx
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ShopCard = ({ categories }) => {
   const topCategories = [...categories]
@@ -8,8 +9,10 @@ const ShopCard = ({ categories }) => {
   return (
     <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 p-4">
       {topCategories.map((category) => (
-        <a
-          href={`/shop/${category.gender}/${category.code}/${category.id}`} // Link yapısını oluştur
+        <Link
+          to={`/shop/${
+            category.code.split(":")[0] === "k" ? "kadin" : "erkek"
+          }/${category.code.split(":")[1].toLowerCase()}/${category.id}`} // Link yapısını oluştur
           key={category.id}
           className="bg-cover bg-center flex items-center justify-center text-center"
           style={{
@@ -22,7 +25,7 @@ const ShopCard = ({ categories }) => {
           <div className="text-white w-full py-2">
             <h5 className="text-lg font-bold">{category.title}</h5>
           </div>
-        </a>
+        </Link>
       ))}
     </div>
   );
