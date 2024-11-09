@@ -51,6 +51,7 @@ const Header = () => {
   useEffect(() => {
     dispatch(fetchCategories()); // Kategorileri API'den çek
   }, [dispatch]);
+
   const gravatarUrl = userInfo
     ? `https://www.gravatar.com/avatar/${md5(
         userInfo.email.trim().toLowerCase()
@@ -196,7 +197,7 @@ const Header = () => {
                 <NavigationMenuList>
                   <NavigationMenuItem>
                     <NavigationMenuTrigger className="text-lg text-gray-700">
-                      Shop
+                      <Link to="/shop"> Shop</Link>
                     </NavigationMenuTrigger>
                     <NavigationMenuContent className="grid gap-4 bg-white p-4 rounded shadow-md md:w-[400px] lg:w-[500px] lg:grid-cols-2 ">
                       <div>
@@ -206,9 +207,9 @@ const Header = () => {
                             <li key={category.id}>
                               <NavigationMenuLink asChild>
                                 <Link
-                                  to={`/shop/${formatCategoryCode(
-                                    category.code
-                                  )}`}
+                                  to={`/shop/kadin/${category.code
+                                    .split(":")[1]
+                                    .toLowerCase()}/${category.id}`}
                                   className="text-gray-700 hover:text-blue-600"
                                 >
                                   {category.title}
@@ -225,9 +226,9 @@ const Header = () => {
                             <li key={category.id}>
                               <NavigationMenuLink asChild>
                                 <Link
-                                  to={`/shop/${formatCategoryCode(
-                                    category.code
-                                  )}`}
+                                  to={`/shop/erkek/${category.code
+                                    .split(":")[1]
+                                    .toLowerCase()}/${category.id}`}
                                   className="text-gray-700 hover:text-blue-600"
                                 >
                                   {category.title}

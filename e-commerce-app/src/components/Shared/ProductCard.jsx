@@ -3,13 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchProducts } from "../../store/actions/productActions";
 
-const ProductCard = () => {
+const ProductCard = ({ category, filter, sort }) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const isLoading = useSelector((state) => state.products.isLoading);
+
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    dispatch(fetchProducts({ category, filter, sort }));
+  }, [dispatch, category, filter, sort]);
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-48">
@@ -19,7 +21,7 @@ const ProductCard = () => {
   }
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:px-20">
-      {products.slice(0, 8).map((product) => (
+      {products.map((product) => (
         <Link to={`/products/${product.id}`} key={product.id}>
           <div className="bg-white p-4 text-center ">
             <div
