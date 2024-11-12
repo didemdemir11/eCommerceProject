@@ -30,6 +30,7 @@ import { fetchProducts } from "../../store/actions/productActions";
 const ShopPage = () => {
   const dispatch = useDispatch();
   const { gender, categoryName, categoryId } = useParams();
+  const resolvedCategory = categoryId || null;
   const navigate = useNavigate();
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState("");
@@ -48,9 +49,9 @@ const ShopPage = () => {
   useEffect(() => {
     const offset = (currentPage - 1) * limit;
     dispatch(
-      fetchProducts({ category: categoryId, filter, sort, limit, offset })
-    ); // Fetch products using categoryId
-  }, [dispatch, categoryId, filter, sort, limit, currentPage]); // Fetch products on change
+      fetchProducts({ category: resolvedCategory, filter, sort, limit, offset })
+    ); // Fetch products using categoryId or all
+  }, [dispatch, resolvedCategory, filter, sort, limit, currentPage]); // Fetch products on change
 
   const applyFilters = () => {
     const params = new URLSearchParams();
@@ -59,9 +60,11 @@ const ShopPage = () => {
     if (sort) params.append("sort", sort);
     params.append("limit", limit);
     params.append("offset", (currentPage - 1) * limit);
-
+    const path = `/shop/${gender || ""}/${categoryName || ""}/${
+      categoryId || ""
+    }`;
     navigate({
-      pathname: `/shop/${gender}/${categoryName}/${categoryId}`,
+      pathname: path,
       search: params.toString(),
     });
   };
