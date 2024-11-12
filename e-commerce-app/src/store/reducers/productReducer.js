@@ -1,3 +1,4 @@
+import { current } from "@reduxjs/toolkit";
 import {
   FETCH_PRODUCTS_SUCCESS,
   FETCH_PRODUCTS_FAILURE,
@@ -12,6 +13,7 @@ const initialState = {
   selectedProduct: null,
   isLoading: false,
   error: null,
+  currentPage: 1,
 };
 
 const productReducer = (state = initialState, action) => {
@@ -23,6 +25,7 @@ const productReducer = (state = initialState, action) => {
         ...state,
         products: action.payload.products,
         total: action.payload.total,
+        totalPages: Math.ceil(action.payload.total / 25),
         isLoading: false,
       };
     case FETCH_PRODUCTS_FAILURE:

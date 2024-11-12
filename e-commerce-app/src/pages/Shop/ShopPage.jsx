@@ -33,29 +33,47 @@ const ShopPage = () => {
   const navigate = useNavigate();
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState("");
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 25; // Her sayfada gösterilecek ürün sayısı
+  const offset = (currentPage - 1) * limit; // Offset hesaplama
   const categories = useSelector((state) => state.categories.categories);
   const products = useSelector((state) => state.products.products);
+  const totalProducts = useSelector((state) => state.products.total);
+  const totalPages = Math.ceil(totalProducts / limit);
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
+
   useEffect(() => {
-    dispatch(fetchProducts({ category: categoryId, filter, sort })); // Fetch products using categoryId
-  }, [dispatch, categoryId, filter, sort]); // Fetch products on change
+    const offset = (currentPage - 1) * limit;
+    dispatch(
+      fetchProducts({ category: categoryId, filter, sort, limit, offset })
+    ); // Fetch products using categoryId
+  }, [dispatch, categoryId, filter, sort, limit, currentPage]); // Fetch products on change
 
   const applyFilters = () => {
     const params = new URLSearchParams();
 
     if (filter) params.append("filter", filter);
     if (sort) params.append("sort", sort);
+    params.append("limit", limit);
+    params.append("offset", (currentPage - 1) * limit);
 
-    navigate({ search: params.toString() });
+    navigate({
+      pathname: `/shop/${gender}/${categoryName}/${categoryId}`,
+      search: params.toString(),
+    });
   };
 
   useEffect(() => {
     applyFilters();
-  }, [filter, sort]);
+  }, [filter, sort, currentPage]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <PageContent>
       <div className="mt-12 md:mt-8 flex flex-col md:flex-row items-center md:justify-between px-4 md:px-8">
@@ -85,7 +103,8 @@ const ShopPage = () => {
       <div className="flex flex-col md:flex-row items-center justify-between w-full space-y-4 md:space-y-0 md:space-x-8 mt-4 md:mt-8">
         {/* Showing Results */}
         <h6 className="text-center md:text-left font-bold text-[#737373] text-sm md:text-base">
-          Showing all {products.length} results
+          Showing {offset + 1} - {offset + products.length} of {totalProducts}{" "}
+          results
         </h6>
 
         {/* Views Section */}
@@ -124,7 +143,11 @@ const ShopPage = () => {
         </div>
       </div>
       <ProductCard category={categoryId} filter={filter} sort={sort} />
-      <CustomPagination />
+      <CustomPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
       <LogoSection />
     </PageContent>
   );
