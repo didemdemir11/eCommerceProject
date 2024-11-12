@@ -8,6 +8,7 @@ export const fetchCategories = () => (dispatch) => {
     .get("/categories")
     .then((response) => {
       dispatch({ type: FETCH_CATEGORIES_SUCCESS, payload: response.data });
+      console.log(response.data);
     })
     .catch((error) => {
       console.error("Error fetching categories:", error);

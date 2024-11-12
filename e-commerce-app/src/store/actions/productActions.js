@@ -5,7 +5,7 @@ export const FETCH_PRODUCTS_FAILURE = "FETCH_PRODUCTS_FAILURE";
 export const SET_LOADING = "SET_LOADING";
 
 export const fetchProducts =
-  ({ category = null, filter = "", sort = "" } = {}) =>
+  ({ category = null, filter = "", sort = "", limit = 25, offset = 0 } = {}) =>
   (dispatch) => {
     dispatch({ type: SET_LOADING });
     // Query parametreleri hazırlıyoruz
@@ -13,6 +13,9 @@ export const fetchProducts =
     if (category) params.append("category", category);
     if (filter) params.append("filter", filter);
     if (sort) params.append("sort", sort);
+    params.append("limit", limit);
+    params.append("offset", offset);
+
     api
       .get(`/products?${params.toString()}`)
       .then((response) => {
@@ -35,6 +38,7 @@ export const fetchProducts =
 
 export const FETCH_PRODUCT_BY_ID_SUCCESS = "FETCH_PRODUCT_BY_ID_SUCCESS";
 export const FETCH_PRODUCT_BY_ID_FAILURE = "FETCH_PRODUCT_BY_ID_FAILURE";
+
 export const fetchProductById = (id) => (dispatch) => {
   api
     .get(`/products/${id}`)

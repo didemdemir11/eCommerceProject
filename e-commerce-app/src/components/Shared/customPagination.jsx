@@ -7,7 +7,16 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-const CustomPagination = ({ currentPage = 2, totalPages = 3 }) => {
+const CustomPagination = ({
+  currentPage = 1,
+  totalPages = 1,
+  onPageChange,
+}) => {
+  const handlePageClick = (pageNum) => {
+    if (pageNum !== currentPage && pageNum > 0 && pageNum <= totalPages) {
+      onPageChange(pageNum);
+    }
+  };
   return (
     <Pagination className="flex items-center justify-center mt-4 space-x-1  rounded-md p-2 bg-white">
       <PaginationContent>
@@ -15,6 +24,7 @@ const CustomPagination = ({ currentPage = 2, totalPages = 3 }) => {
         <PaginationItem>
           <PaginationPrevious
             href="#"
+            onClick={() => handlePageClick(1)}
             className={`px-4 py-2 rounded-l-md font-semibold ${
               currentPage === 1
                 ? "text-gray-400 cursor-not-allowed bg-gray-100"
@@ -32,6 +42,7 @@ const CustomPagination = ({ currentPage = 2, totalPages = 3 }) => {
             <PaginationItem key={pageNum}>
               <PaginationLink
                 href="#"
+                onClick={() => handlePageClick(pageNum)}
                 isActive={currentPage === pageNum}
                 className={`px-4 py-2 border border-gray-300 ${
                   currentPage === pageNum
@@ -49,6 +60,7 @@ const CustomPagination = ({ currentPage = 2, totalPages = 3 }) => {
         <PaginationItem>
           <PaginationNext
             href="#"
+            onClick={() => handlePageClick(currentPage + 1)}
             className={`px-4 py-2 rounded-r-md font-semibold ${
               currentPage === totalPages
                 ? "text-gray-400 cursor-not-allowed "
